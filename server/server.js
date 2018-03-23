@@ -1,9 +1,20 @@
 'use strict';
 
-var loopback = require('loopback');
+var bodyParser = require('body-parser');
 var boot = require('loopback-boot');
+var loopback = require('loopback');
+var path = require('path');
 
 var app = module.exports = loopback();
+
+app.middleware('initial', bodyParser.urlencoded({ extended: true }));
+
+// Bootstrap the application, configure models, datasources and middleware.
+
+boot(app, __dirname);
+
+app.set('view engine', 'ejs'); // LoopBack comes with EJS out-of-box
+app.set('json spaces', 2); // format json responses for easier viewing
 
 app.start = function() {
   // start the web server
